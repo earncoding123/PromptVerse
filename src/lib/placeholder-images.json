@@ -1,0 +1,64 @@
+{
+  "placeholderImages": [
+    {
+      "id": "prompt-1-cover",
+      "description": "Abstract vibrant colors",
+      "imageUrl": "https://images.unsplash.com/photo-1533129508934-8027a3125d9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHZpYnJhbnR8ZW58MHx8fHwxNzYzMTYyNDk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract vibrant"
+    },
+    {
+      "id": "prompt-2-cover",
+      "description": "Cyberpunk city skyline",
+      "imageUrl": "https://images.unsplash.com/photo-1561344640-2453889cde5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y3liZXJwdW5rJTIwY2l0eXxlbnwwfHx8fDE3NjMyMTI0ODN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cyberpunk city"
+    },
+    {
+      "id": "prompt-3-cover",
+      "description": "Enchanted forest illustration",
+      "imageUrl": "https://images.unsplash.com/photo-1619982870053-1545857b7eb4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxlbmNoYW50ZWQlMjBmb3Jlc3R8ZW58MHx8fHwxNzYzMTY1ODIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "enchanted forest"
+    },
+    {
+      "id": "prompt-4-cover",
+      "description": "Minimalist architectural design",
+      "imageUrl": "https://images.unsplash.com/photo-1554620048-6bd0e1854172?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtaW5pbWFsaXN0JTIwYXJjaGl0ZWN0dXJlfGVufDB8fHx8MTc2MzE3MTc5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "minimalist architecture"
+    },
+    {
+      "id": "prompt-5-cover",
+      "description": "Vintage photograph effect",
+      "imageUrl": "https://images.unsplash.com/photo-1588420490858-3828a17244a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx2aW50YWdlJTIwcGhvdG9ncmFwaHxlbnwwfHx8fDE3NjMxNjk3NTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vintage photograph"
+    },
+    {
+      "id": "prompt-6-cover",
+      "description": "Watercolor animal portrait",
+      "imageUrl": "https://images.unsplash.com/photo-1741037306855-9165f043127c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3YXRlcmNvbG9yJTIwYW5pbWFsfGVufDB8fHx8MTc2MzIxNjI0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "watercolor animal"
+    },
+    {
+      "id": "prompt-7-cover",
+      "description": "3D character model",
+      "imageUrl": "https://images.unsplash.com/photo-1645943020355-305df166473d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHwzZCUyMGNoYXJhY3RlcnxlbnwwfHx8fDE3NjMxNjI4MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "3d character"
+    },
+    {
+      "id": "prompt-8-cover",
+      "description": "Food photography flat lay",
+      "imageUrl": "https://images.unsplash.com/photo-1623406827446-bca8c08b85fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmb29kJTIwZmxhdGxheXxlbnwwfHx8fDE3NjMxOTcyNDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food flatlay"
+    },
+    {
+      "id": "prompt-9-cover",
+      "description": "Surreal landscape painting",
+      "imageUrl": "https://i.postimg.cc/tJ61tMC1/Whats-App-Image-2025-11-12-at-3-55-37-PM.jpg",
+      "imageHint": "surreal landscape"
+    },
+    {
+      "id": "prompt-10-cover",
+      "description": "Product mockup on a clean background",
+      "imageUrl": "https://images.unsplash.com/photo-1711563386439-75ce269ac998?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwcm9kdWN0JTIwbW9ja3VwfGVufDB8fHx8MTc2MzE2NDUzOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "product mockup"
+    }
+  ]
+}

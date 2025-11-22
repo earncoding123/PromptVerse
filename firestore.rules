@@ -1,0 +1,169 @@
+
+/**
+ * @file Firebase Security Rules for RealPrompt
+ * @version 2
+ *
+ * @Core Philosophy:
+ * This ruleset enforces a strict user-ownership model for user profiles, purchases, and downloads.
+ * Prompts are publicly readable but owner-editable. Admin status is granted by the existence
+ * of a document in the `/roles_admin/{userId}` collection.
+ *
+ * @Data Structure:
+ * - /users/{userId}: User profile information. Only the user or an admin can access.
+ * - /prompts/{promptId}: Prompt details, including a `createdBy` field for ownership.
+ * - /users/{userId}/purchases/{purchaseId}: Purchase records for each user.
+ * - /users/{userId}/downloads/{downloadId}: Download records for each user.
+ * - /roles_admin/{userId}: Indicates admin status.
+ *
+ * @Key Security Decisions:
+ * - User listing is disabled.
+ * - Public read access to prompts, but only owners can modify.
+ * - Admin status is determined by the presence of a document in `/roles_admin/{userId}`.
+ *
+ * @Denormalization for Authorization:
+ * - Prompts include a `createdBy` field to denote ownership, avoiding extra reads.
+ *
+ * @Structural Segregation:
+ * - Private user data (purchases, downloads) is stored in user subcollections.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Protects user profile information.
+     * @path /users/{userId}
+     * @allow (create) User with matching userId can create their profile.
+     * @allow (get, update, delete) User with matching userId can access their profile.
+     * @deny (create, get, update, delete) User trying to access another user's profile.
+     * @principle Enforces document ownership for writes.
+     */
+    match /users/{userId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+
+      function isAdmin() {
+        return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      }
+
+      function isExistingOwner(userId) {
+          return isOwner(userId) && resource != null;
+      }
+
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if false;
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId) || isAdmin();
+    }
+
+    /**
+     * @description Manages prompts, allowing public read but owner-only writes.
+     * @path /prompts/{promptId}
+     * @allow (get, list) Anyone can read prompts.
+     * @allow (create) User can create a prompt if the `createdBy` field matches their UID.
+     * @allow (update, delete) Only the prompt creator or an admin can modify/delete.
+     * @deny (create, update, delete) If the user is not the owner and not an admin.
+     * @principle Public read access with owner-only writes.
+     */
+    match /prompts/{promptId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+
+      function isAdmin() {
+        return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      }
+
+      function isExistingOwner(userId) {
+          return isOwner(userId) && resource != null;
+      }
+
+      allow get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.createdBy == request.auth.uid;
+      allow update: if isExistingOwner(resource.data.createdBy) || isAdmin();
+      allow delete: if isExistingOwner(resource.data.createdBy) || isAdmin();
+    }
+
+    /**
+     * @description Manages purchase records for each user.
+     * @path /users/{userId}/purchases/{purchaseId}
+     * @allow (get, list) User with matching userId can access their purchase records.
+     * @allow (create) User with matching userId can create purchase records.
+     * @deny (create, get, update, delete) User trying to access another user's purchase records.
+     * @principle Enforces document ownership for purchases.
+     */
+    match /users/{userId}/purchases/{purchaseId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+
+        function isAdmin() {
+          return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+        }
+
+        function isExistingOwner(userId) {
+            return isOwner(userId) && resource != null;
+        }
+
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if false;
+      allow delete: if isExistingOwner(userId) || isAdmin();
+    }
+
+    /**
+     * @description Manages download records for each user.
+     * @path /users/{userId}/downloads/{downloadId}
+     * @allow (get, list) User with matching userId can access their download records.
+     * @allow (create) User with matching userId can create download records.
+     * @deny (create, get, update, delete) User trying to access another user's download records.
+     * @principle Enforces document ownership for downloads.
+     */
+    match /users/{userId}/downloads/{downloadId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+
+        function isAdmin() {
+          return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+        }
+
+        function isExistingOwner(userId) {
+            return isOwner(userId) && resource != null;
+        }
+
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if false;
+      allow delete: if isExistingOwner(userId) || isAdmin();
+    }
+
+    /**
+     * @description Manages admin roles.
+     * @path /roles_admin/{userId}
+     * @allow (get, list) Only admins can read admin roles.
+     * @allow (create) Only admins can create admin roles.
+     * @deny (create, get, update, delete) Non-admins cannot modify admin roles.
+     * @principle Restricts admin role management to admins.
+     */
+    match /roles_admin/{userId} {
+        function isAdmin() {
+            return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+        }
+
+        allow get: if isAdmin();
+        allow list: if isAdmin();
+        allow create: if isAdmin();
+        allow update: if false;
+        allow delete: if isAdmin();
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+  }
+}
